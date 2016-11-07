@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="scripts/mespeak.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.8.2.min.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+
+     
+    </script>
+
+    <script type="text/javascript">
+        window.onload = load;
+        var myData;
+        function load() {
+            $.getJSON("scripts/Dictionary.json", function (json) {
+                myData = json;
+            });
+
+            //mespeak
+            meSpeak.loadConfig("scripts/mespeak_config.js");
+            meSpeak.loadVoice("scripts/pl.js");
+           
+        }
+        function process()
+        {
+            var TheInput = document.getElementById("input").value;
+            var InputSplit = TheInput.split(' ');
+            var Output = '';
+            var mydata;
+
+
+            for (str in InputSplit) {
+                Output += Speech(InputSplit[str]) + " ";
+            }
+
+            meSpeak.speak(Output);
+
+        }
+
+        function Speech(str) {
+
+            if (myData.hasOwnProperty(str))
+                return myData[str];
+            else
+                return "";
+        }
+
+    </script>
+
+    <input id="input" type="text" value=""/>
+    <h5 id="translated">הכנס משפט בעברית ולחץ על הכפתור </h5>
+    <button onclick="process()">אמור</button>
+
+</body>
+
+</html>
